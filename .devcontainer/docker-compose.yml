@@ -29,6 +29,10 @@ services:
     image: puppet/puppet-agent-ubuntu
     container_name: agent1
     hostname: agent1
+    depends_on:
+      server:
+        condition: service_started
+        restart: true
     volumes:
       - agent1-tmp:/tmp 
       - agent1-etc:/etc 
@@ -40,6 +44,10 @@ services:
     image: puppet/puppet-agent-ubuntu
     container_name: agent2
     hostname: agent2
+    depends_on:
+      server:
+        condition: service_started
+        restart: true
     volumes:
       - agent2-tmp:/tmp 
       - agent2-etc:/etc 
@@ -51,6 +59,10 @@ services:
     image: puppet/puppet-agent-ubuntu
     container_name: agent3
     hostname: agent3
+    depends_on:
+      server:
+        condition: service_started
+        restart: true      
     volumes:
       - agent3-tmp:/tmp 
       - agent3-etc:/etc 
