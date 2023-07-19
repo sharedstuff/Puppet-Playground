@@ -24,6 +24,12 @@ services:
     hostname: puppet
     volumes:
       - ../code:/etc/puppetlabs/code/
+    healthcheck:
+      test: "./healthcheck.sh"
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
 
   agent1:
     image: puppet/puppet-agent-ubuntu
@@ -31,7 +37,7 @@ services:
     hostname: agent1
     depends_on:
       server:
-        condition: service_started
+        condition: service_healthy
         restart: true
     volumes:
       - agent1-tmp:/tmp 
@@ -46,7 +52,7 @@ services:
     hostname: agent2
     depends_on:
       server:
-        condition: service_started
+        condition: service_healthy
         restart: true
     volumes:
       - agent2-tmp:/tmp 
@@ -61,7 +67,7 @@ services:
     hostname: agent3
     depends_on:
       server:
-        condition: service_started
+        condition: service_healthy
         restart: true      
     volumes:
       - agent3-tmp:/tmp 
@@ -85,4 +91,4 @@ volumes:
   agent3-etc:
   agent3-var:
   agent3-usr:
-  agent3-lib64:  
+  agent3-lib64:
