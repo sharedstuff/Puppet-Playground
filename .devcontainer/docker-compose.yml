@@ -18,11 +18,12 @@ services:
     volumes:
       - ..:/workspace:cached
 
-  server:
+  puppet:
     image: puppet/puppetserver
     container_name: puppet
     hostname: puppet
     volumes:
+      - server-ca:/letc/puppetlabs/puppetserver/ca
       - ../code:/etc/puppetlabs/code/
     healthcheck:
       test: "./healthcheck.sh"
@@ -36,7 +37,7 @@ services:
     container_name: agent1
     hostname: agent1
     depends_on:
-      server:
+      puppet:
         condition: service_healthy
         restart: true
     volumes:
@@ -51,7 +52,7 @@ services:
     container_name: agent2
     hostname: agent2
     depends_on:
-      server:
+      puppet:
         condition: service_healthy
         restart: true
     volumes:
@@ -66,7 +67,7 @@ services:
     container_name: agent3
     hostname: agent3
     depends_on:
-      server:
+      puppet:
         condition: service_healthy
         restart: true      
     volumes:
@@ -77,6 +78,7 @@ services:
       - agent3-lib64:/lib64
 
 volumes:
+  server-ca:
   agent1-tmp:
   agent1-etc:
   agent1-var:
