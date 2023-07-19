@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+
+  vscode:
+    build:
+      context: PowerShellBuildKit
+      args:
+        AlpineContainerTag: 3.18
+        PowerShellVersion: 7.3.6
+    environment:
+      TZ: Europe/Amsterdam
+      LANG: de_DE.UTF-8
+      LANGUAGE: C.UTF-8 
+    stdin_open: true
+    tty: true 
+    volumes:
+      - ..:/workspace:cached
+
+  server:
+    image: puppet/puppetserver
+    container_name: puppet
+    hostname: puppet
+    volumes:
+      - ../code:/etc/puppetlabs/code/
