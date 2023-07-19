@@ -2,6 +2,8 @@ version: "3.8"
 services:
 
   vscode:
+    container_name: vscode
+    hostname: vscode
     build:
       context: PowerShellBuildKit
       args:
@@ -22,3 +24,53 @@ services:
     hostname: puppet
     volumes:
       - ../code:/etc/puppetlabs/code/
+
+  agent1:
+    image: puppet/puppet-agent-ubuntu
+    container_name: agent1
+    hostname: agent1
+    volumes:
+      - agent1-tmp:/tmp 
+      - agent1-etc:/etc 
+      - agent1-var:/var 
+      - agent1-usr:/usr 
+      - agent1-lib64:/lib64
+
+  agent2:
+    image: puppet/puppet-agent-ubuntu
+    container_name: agent2
+    hostname: agent2
+    volumes:
+      - agent2-tmp:/tmp 
+      - agent2-etc:/etc 
+      - agent2-var:/var 
+      - agent2-usr:/usr 
+      - agent2-lib64:/lib64
+
+  agent3:
+    image: puppet/puppet-agent-ubuntu
+    container_name: agent3
+    hostname: agent3
+    volumes:
+      - agent3-tmp:/tmp 
+      - agent3-etc:/etc 
+      - agent3-var:/var 
+      - agent3-usr:/usr 
+      - agent3-lib64:/lib64
+
+volumes:
+  agent1-tmp:
+  agent1-etc:
+  agent1-var:
+  agent1-usr:
+  agent1-lib64:
+  agent2-tmp:
+  agent2-etc:
+  agent2-var:
+  agent2-usr:
+  agent2-lib64:
+  agent3-tmp:
+  agent3-etc:
+  agent3-var:
+  agent3-usr:
+  agent3-lib64:  
